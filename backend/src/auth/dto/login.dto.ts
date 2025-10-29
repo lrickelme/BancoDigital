@@ -8,4 +8,8 @@ export class LoginDto {
   @IsString({ message: 'Password must be a string' })
   @IsNotEmpty({ message: 'Password cannot be empty' })
   password!: string;
+
+  @IsString({ message: 'Bank must be a string' })
+  @IsNotEmpty({ message: 'Bank cannot be empty' })
+  bank!: string;
 }

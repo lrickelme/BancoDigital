@@ -1,6 +1,7 @@
 "use strict";
 
-const LOGIN_URL = "http://localhost:3001/auth/login"; // endpoint NestJS
+const LOGIN_URL = "http://localhost:3001/auth/login";
+
 const TIMEOUT_MS = 10000;
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -12,6 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
   demoBtn.addEventListener("click", () => {
     document.getElementById("username").value = "demo@exemplo.com";
     document.getElementById("password").value = "demopassword";
+    document.getElementById("bank").value = "caixa";
     msg("", "");
   });
 
@@ -21,9 +23,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const username = form.username.value.trim();
     const password = form.password.value;
+    const bank = form.bank.value;
 
     if (!username || !password) {
       msg("Preencha usuário e senha.", "error");
+      return;
+    }
+
+    if (!bank) {
+      msg("Selecione um banco.", "error");
       return;
     }
 
@@ -31,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
     submitBtn.textContent = "Entrando...";
 
     try {
-      const result = await login({ username, password });
+      const result = await login({ username, password, bank });
 
       if (result?.token) {
         msg("Login efetuado com sucesso.", "success");
