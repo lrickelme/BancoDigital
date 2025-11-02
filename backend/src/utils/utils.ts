@@ -1,4 +1,5 @@
 import * as crypto from 'crypto';
+import * as bcrypt from 'bcrypt';
 
 export function encrypt(password: string): string {
   const key = '12345678901234567890123456789012';
@@ -16,6 +17,18 @@ export function decrypt(encrypted: string): string {
   let decrypted = decipher.update(encrypted, 'base64', 'utf8');
   decrypted += decipher.final('utf8');
   return decrypted;
+}
+
+export function bcryptHash(password: string): string {
+  return bcrypt.hashSync(password, 10);
+}
+
+export function bcryptCompare(password: string, stored: string): boolean {
+  try {
+    return bcrypt.compareSync(password, stored);
+  } catch (_error) {
+    return false;
+  }
 }
 
 export function generateJwt(username: string): string {
